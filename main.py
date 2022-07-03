@@ -188,11 +188,13 @@ def main(win, width):
 				if event.key == pygame.K_SPACE and start and end:
 					for row in grid:
 						for spot in row:
+							if(not (spot.is_barrier() or spot.is_end() or spot.is_start())):
+								spot.reset()
 							spot.update_neighbors(grid)
 
 					algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
 
-				if event.key == pygame.K_c:
+				if event.key == pygame.K_r:
 					start = None
 					end = None
 					grid = make_grid(ROWS, width)
