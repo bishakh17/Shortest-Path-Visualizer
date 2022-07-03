@@ -1,11 +1,12 @@
 import pygame
+import math
 from queue import PriorityQueue
 
 
 def h(p1, p2):
 	x1, y1 = p1
 	x2, y2 = p2
-	return (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)
+	return math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2))
 
 
 def reconstruct_path(came_from, current, draw):
@@ -41,7 +42,8 @@ def algorithm(draw, grid, start, end):
 			return True
 
 		for neighbor in current.neighbors:
-			temp_g_score = g_score[current] + 1
+			distance = h(current.get_pos(),neighbor.get_pos())
+			temp_g_score = g_score[current] + distance
 
 			if temp_g_score < g_score[neighbor]:
 				came_from[neighbor] = current
